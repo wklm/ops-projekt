@@ -1,14 +1,10 @@
-> React Foundation Apps is a react port of Foundation Apps
-
 Foundation Apps is a new framework for building web apps. It has awesome new features like 
 flexbox based grid, motion-ui, and several core components for building web apps.
 But, javascript components of foundation-apps are built with angular.
 
 Try React Foundation Apps, if you want to use react.
 
-React Foundation Apps lets you avail the benefits of both React and Foundation Apps.
-
-Checkout [documentation](http://webrafter.com/opensource/react-foundation-apps) 
+React Foundation Apps lets you avail the benefits of both React and Foundation Apps. 
 
 ### Installation
 
@@ -28,14 +24,14 @@ All the components are in react-foundation-apps/lib.
 You can import the required components like so
 
 ```javascript
-var Accordion = require('react-foundation-apps/lib/accordion');
+var Accordion = require('react-foundation-apps/src/accordion');
 ```
 
 ### Example
 
 ```javascript
 var React = require('react');
-var Accordion = require('react-foundation-apps/lib/accordion');
+var Accordion = require('react-foundation-apps/src/accordion');
 
 var SampleAccordion = React.createClass({
   render: function () {
@@ -56,8 +52,4 @@ var SampleAccordion = React.createClass({
 });
 
 module.exports = SampleAccordion;
-
 ```
-
-### Sponsors
-If your company likes to sponsor this project, contact me. 
