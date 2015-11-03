@@ -1,0 +1,18 @@
+.title {
+    font-family: monospace;
+    font-size: 5rem;
+}
+.top {
+    margin-left: auto!important;
+    margin-right: auto!important;
+    float: none!important;
+    display: block;
+    text-align: center;
+}
+
+.button {
+    color: #FFFFA2 !important;
+}
+.menu-img {
+    height: 20rem;
+}
