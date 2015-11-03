@@ -906,7 +906,7 @@
       }
 
       // Unplug keystrokes listener
-      $(this.scope).off('keyup.joyride')
+      $(this.scope).off('keyup.joyride');
 
       this.settings.$next_tip.data('closed', true);
       this.settings.riding = false;

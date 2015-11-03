@@ -135,7 +135,7 @@
           }
 
           if ($(this).data('tooltip-open-event-type') == 'touch' && e.type == 'mouseleave') {
-            return;
+
           } else if ($(this).data('tooltip-open-event-type') == 'mouse' && /MSPointerDown|touchstart/i.test(e.type)) {
             self.convert_to_touch($(this));
           } else {
@@ -157,7 +157,7 @@
       if (this.should_show($target, $tip)) {
         return this.show($target);
       }
-      return;
+
     },
 
     getTip : function ($target) {

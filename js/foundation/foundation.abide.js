@@ -256,7 +256,7 @@
           var validators = validator.split(' ');
           var last_valid = true, all_valid = true;
           for (var iv = 0; iv < validators.length; iv++) {
-              valid = this.settings.validators[validators[iv]].apply(this, [el, required, parent])
+              valid = this.settings.validators[validators[iv]].apply(this, [el, required, parent]);
               el_validations.push(valid);
               all_valid = valid && last_valid;
               last_valid = valid;
