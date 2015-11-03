@@ -11,8 +11,9 @@
 }
 
 .button {
-    color: #FFFFA2 !important;
+    color: white !important;
     text-align: center;
+    font-size: 1.2rem;
 }
 .menu-img {
     height: 20rem;
