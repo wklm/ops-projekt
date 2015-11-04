@@ -55,11 +55,13 @@
             var a=res.A;
 
             var table = $('<table></table>').addClass('table').addClass('table-bordered');
-            var row = $('<tr><th>Z</th><th>x1</th><th>x2</th><th>s1</th><th>s1</th><th>s3</th><th>P</th></tr>');
-            table.append(row);
+            var headerRow = $('<tr><th>BV</th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>s3</th><th>P</th></tr>');
+            table.append(headerRow);
             for(i=0; i< a.length; i++){
                 var row = $('<tr></tr>');
-                row.append('<td>0</td>');
+
+                var b=$('<td></td>').text(headerRow[0].cells[res.bv[i]+1].innerHTML);
+                row.append(b)
                 for(j=0;j<a[i].length;j++)
                 {
                     var t=$('<td></td>').text(a[i][j].toFixed(2));
@@ -72,7 +74,7 @@
                     row.append(t);
                 }
 
-                var cellb=$('<td></td>').text(res.b[i+1].toFixed(2));
+                var cellb=$('<td></td>').text(res.b[i].toFixed(2));
                 row.append(cellb);
                 table.append(row);
                 $('#step').val("Step "+step.toString());
@@ -81,7 +83,7 @@
         }
         catch(e)
         {
-
+            console.log(e);
         }
     }
 

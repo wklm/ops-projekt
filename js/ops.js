@@ -1,9 +1,9 @@
-// Implementieren Sie den Simplex Algorithmus. Schreiben Sie dafur eine Funkti- ¨
+// Implementieren Sie den Simplex Algorithmus. Schreiben Sie dafur eine Funkti- ï¿½
 //on mit der Signatur
 //double* lpsolve(int n, double *c, int k, double **A, double *b).
 //39
 //n gibt die Anzahl der Variablen an, k die Anzahl der Nebenbedingung. Die
-//Vektoren c, b und die Matrix A sind entsprechend der Vorlesung zu ubergeben, ¨
+//Vektoren c, b und die Matrix A sind entsprechend der Vorlesung zu ubergeben, ï¿½
 //sodass das Lineare Programm in Standardform
 //c
 //T
@@ -11,15 +11,15 @@
 //    Ax ? b
 //x ? 0
 //ist.
-//    Ruckgabe wird ein Array mit den entsprechenden L ¨ osungswerten sein
-//– in der ersten Zeile stehen zwei mit Abstand getrennte Zahlen n, k, die wie
+//    Ruckgabe wird ein Array mit den entsprechenden L ï¿½ osungswerten sein
+//ï¿½ in der ersten Zeile stehen zwei mit Abstand getrennte Zahlen n, k, die wie
 //oben zu verstehen sind.
-//– in der zweiten Zeile stehen n Fließkommazahlen, die mit Absanden ge- ¨
-//trennt sind, und den Vektor c reprasentieren. ¨
-//– nun folgen k Zeilen mit jeweils n + 1 Zahlen. Die ersten n Zahlen bilden
-//eine Zeile der Matrix A, die letzte steht fur den zugeh ¨ origen Eintrag im ¨
+//ï¿½ in der zweiten Zeile stehen n Flieï¿½kommazahlen, die mit Absanden ge- ï¿½
+//trennt sind, und den Vektor c reprasentieren. ï¿½
+//ï¿½ nun folgen k Zeilen mit jeweils n + 1 Zahlen. Die ersten n Zahlen bilden
+//eine Zeile der Matrix A, die letzte steht fur den zugeh ï¿½ origen Eintrag im ï¿½
 //Vektor b (Jede Zeile entspricht daher einer Nebenbedingung.)
-//– Beachten Sie zum Einlesen eines ahnlichen Files auch das Beispielprogramm ¨
+//ï¿½ Beachten Sie zum Einlesen eines ahnlichen Files auch das Beispielprogramm ï¿½
 //im Anhang.
 
 if (typeof console === "undefined"){
@@ -82,14 +82,10 @@ function parseSolve(data, steps)
         }
     }
 
-    b.splice(0,0,0); //TODO: ?
     printVector("c", cVals);
     printMatrix("A", A);
     printVector("b", b);
-    return lpsolve(n+k, cVals, k, A, b, steps);
-    printVector("c", cVals);
-    printMatrix("A", A);
-    printVector("b", b);
+    return lpsolve(n, cVals, k, A, b, steps);
 }
 
 function printVector(name, v)
@@ -118,7 +114,8 @@ var Result ={
     c:undefined,
     b:undefined,
     pivotCol:undefined,
-    pivotRow:undefined
+    pivotRow:undefined,
+    bv:undefined
 }
 
 function  lpsolve(n, c, k, A, b, steps) {
@@ -126,43 +123,42 @@ function  lpsolve(n, c, k, A, b, steps) {
 
     var min;
     var solution=new Array(); //n+1; //double * solution = new double [n + 1];
-    var rowVariableTracker=new Array(); //k //int * rowVariableTracker = new int [k];
+    var bv=new Array(); //k //int * rowVariableTracker = new int [k];
 
-    for(var i = 0; i < k; ++i) {
-        rowVariableTracker[i] = n - k + i + 1;
-    }
+    for(var i = 0; i < k; i++)
+        bv[i] = n + i;
+
     var curStep=0;
-    while(curStep<steps&&(min = findMin(c, n)) < 0) {
+    while(curStep<steps&&(min = findMin(c, n+k)) < 0) {
         curStep++;
         var pivotColumn;
-        for(var i = 0; i < n; ++i)
+        for(var i = 0; i < n+k; ++i)
             if(c[i] == min)
                 pivotColumn = i;
-
 
         var pivotRowSet = false;
         var pivotRowDiv;
         var pivotRow;
         var pivot;
-        for(var i = 1; i < k + 1; ++i) {
-            if(A[i - 1][pivotColumn] != 0) {
+        for(var i = 0; i < k; ++i) {
+            if(A[i][pivotColumn] != 0) {
                 if(!pivotRowSet) {
-                    pivotRowDiv = b[i] / A[i - 1][pivotColumn];
-                    pivotRow = i - 1;
-                    pivot = A[i - 1][pivotColumn];
+                    pivotRowDiv = b[i] / A[i][pivotColumn];
+                    pivotRow = i;
+                    pivot = A[i][pivotColumn];
                     pivotRowSet = true;
                 }
-                if(b[i] / A[i - 1][pivotColumn] < pivotRowDiv) {
-                    pivotRowDiv = b[i] / A[i - 1][pivotColumn];
-                    pivotRow = i - 1;
-                    pivot = A[i - 1][pivotColumn];
+                if(b[i] / A[i][pivotColumn] < pivotRowDiv) {
+                    pivotRowDiv = b[i] / A[i][pivotColumn];
+                    pivotRow = i;
+                    pivot = A[i][pivotColumn];
                 }
             }
         }
         console.log("-> Pivot Column:" + pivotColumn);
         console.log("-> Pivot Row:   " + pivotRow );
 
-        rowVariableTracker[pivotRow] = pivotColumn + 1;
+        bv[pivotRow] = pivotColumn;
         var divisor;
         var functionDivisor = c[pivotColumn] / pivot;
 
@@ -172,18 +168,18 @@ function  lpsolve(n, c, k, A, b, steps) {
             } else {
                 divisor = A[j][pivotColumn] / pivot;
             }
-            for(var f = 0; f < n; ++f) {
+            for(var f = 0; f < n+k; ++f) {
                 A[j][f] = A[j][f] - (divisor * A[pivotRow][f]);
             }
-            b[j + 1] = b[j + 1] - (divisor * b[pivotRow + 1]);
+            b[j] = b[j] - (divisor * b[pivotRow]);
         }
 
-        b[0] = b[0] - (functionDivisor * b[pivotRow + 1]);
-        for(var p = 0; p < n; ++p) {
+        b[0] = b[0] - (functionDivisor * b[pivotRow]);
+        for(var p = 0; p < n+k; ++p) {
             c[p] = c[p] - (functionDivisor * A[pivotRow][p]);
         }
-        b[pivotRow + 1] = b[pivotRow + 1] / pivot;
-        for(var s = 0; s < n; ++s) {
+        b[pivotRow] = b[pivotRow] / pivot;
+        for(var s = 0; s < n+k; ++s) {
             A[pivotRow][s] = A[pivotRow][s] / pivot;
         }
         printVector("C",c);
@@ -197,6 +193,7 @@ function  lpsolve(n, c, k, A, b, steps) {
     r.pivotCol=pivotColumn;
     r.pivotRow=pivotRow;
     r.step=step;
+    r.bv=bv;
     return r;
 }
 
