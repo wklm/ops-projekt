@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bootstrap-theme.min.css">
+    <script type="text/javascript" src="./js/jquery-1.11.3.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="js/ops.js"></script>
+    <script type="text/javascript" src="http://www.geogebratube.org/scripts/deployggb.js"></script>
+
+    <style>
+        .pivotRow {
+                     background-color: lightgreen;
+                 }
+        .pivotCol {
+            background-color: lightcoral;
+        }
+        .pivotElem {
+            background-color: yellowgreen;
+        }
+    </style>
+</head>
+<body>
+
+<br/>
+<div class="col-md-6">
+
+    <div class="form-inline input">
+
+        <button type="button" name="prev" id="prev" value="prev" onclick="prev();" class="btn btn-default">
+            prev</button>
+        <input type="text" class="input-small form-control" id="step" size="5"/>
+        <button type="button" name="next" id="next" value="next" onclick="next();" class="btn btn-default">
+            next</button>
+    </div>
+    <br/>
+
+    <table id="mytable"></table>
+
+
+        <textarea id="data" rows="6" cols="25" onchange="solve();" onkeyup="solve();">
+        </textarea>
+
+<script language="JavaScript">
+
+    $('#data').val(data2);
+    var step=0;
+
+    function solve()
+    {
+        try{
+            var res=parseSolve($('#data').val(),step);
+            var a=res.A;
+
+            var table = $('<table></table>').addClass('table').addClass('table-bordered');
+            var row = $('<tr><th>Z</th><th>x1</th><th>x2</th><th>s1</th><th>s1</th><th>s3</th><th>P</th></tr>');
+            table.append(row);
+            for(i=0; i< a.length; i++){
+                var row = $('<tr></tr>');
+                row.append('<td>0</td>');
+                for(j=0;j<a[i].length;j++)
+                {
+                    var t=$('<td></td>').text(a[i][j].toFixed(2));
+                    if(j==res.pivotCol&&i==res.pivotRow)
+                        t.addClass("pivotElem");
+                    else if(j==res.pivotCol)
+                        t.addClass("pivotCol");
+                    else if(i==res.pivotRow)
+                        t.addClass("pivotRow");
+                    row.append(t);
+                }
+
+                var cellb=$('<td></td>').text(res.b[i+1].toFixed(2));
+                row.append(cellb);
+                table.append(row);
+                $('#step').val("Step "+step.toString());
+            }
+            $('#mytable').html(table);
+        }
+        catch(e)
+        {
+
+        }
+    }
+
+    solve();
+    function next()
+    {
+        step++;
+        solve();
+    }
+
+    function prev()
+    {
+        if(step>0)
+            step--;
+        solve();
+    }
+
+</script>
+
+
+
+
+
+
+<!--    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home" onclick="step0();">Home</a></li>
+        <li><a data-toggle="tab" href="#step1" onclick="step1();">Step 1</a></li>
+        <li><a data-toggle="tab" href="#step2" onclick="step2();">Step 2</a></li>
+        <li><a data-toggle="tab" href="#step3" onclick="step3();">Step 3</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <h1>Step 1</h1>
+            Wir wählen als  Pivotspalte immer die Spalte mit dem kleinsten Eintrag in der Zielfunktionszeile.<br/>
+            Die Zeile mit dem kleinsten nichtnegativen Quotienten wählen wir als  Pivotzeile.<br/>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Z</th><th>x1</th><th>x2</th><th>s1</th><th>s1</th><th>s3</th><th>P</th><th>Q</th>
+                </tr>
+                <tr>
+                    <td>0</td><td>2</td><td>1</td><td>1</td><td>0</td><td>0</td><td>100</td><td></td>
+                </tr>
+                <tr>
+                    <td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>80</td><td></td>
+                </tr>
+                <tr>
+                    <td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>40</td><td></td>
+                </tr>
+                <tr>
+                    <td>1</td><td>-3</td><td>-2</td><td>0</td><td>0</td><td>0</td><td>0</td><td></td>
+                </tr>
+            </table>
+        </div>
+
+
+        <div id="step1" class="tab-pane fade">
+            <h1>Step 2</h1>
+            <br/>
+            <br/>
+            <table class="table table-bordered">
+                <tr>
+                    <th>Z</th><th>x1</th><th>x2</th><th>s1</th><th>s1</th><th>s3</th><th>P</th><th>Q</th>
+                </tr>
+                <tr>
+                    <td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>-2</td><td>20</td><td></td>
+                </tr>
+                <tr>
+                    <td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>-1</td><td>40</td><td></td>
+                </tr>
+                <tr>
+                    <td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>40</td><td></td>
+                </tr>
+                <tr>
+                    <td>1</td><td>0</td><td>-2</td><td>0</td><td>0</td><td>3</td><td>120</td><td></td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="step2" class="tab-pane fade">
+            <h1>Step 3</h1>
+            <br/>
+            <br/>
+            <table class="table  table-bordered">
+                <tr>
+                    <th>Z</th><th>x1</th><th>x2</th><th>s1</th><th>s1</th><th>s3</th><th>P</th><th>Q</th>
+                </tr>
+                <tr>
+                    <td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>-2</td><td>20</td><td></td>
+                </tr>
+                <tr>
+                    <td>0</td><td>0</td><td>0</td><td>-1</td><td>1</td><td>1</td><td>20</td><td></td>
+                </tr>
+                <tr>
+                    <td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>40</td><td></td>
+                </tr>
+                <tr>
+                    <td>1</td><td>0</td><td>0</td><td>2</td><td>0</td><td>-1</td><td>160</td><td></td>
+                </tr>
+            </table>
+        </div>
+        <div id="step3" class="tab-pane fade">
+            <h1>Step 3</h1>
+            <br/>
+            <br/>
+            <table class="table  table-bordered">
+                <tr>
+                    <th>Z</th><th>x1</th><th>x2</th><th>s1</th><th>s1</th><th>s3</th><th>P</th><th>Q</th>
+                </tr>
+                <tr>
+                    <td>0</td><td>0</td><td>1</td><td>-1</td><td>2</td><td>0</td><td>60</td><td></td>
+                </tr>
+                <tr>
+                    <td>0</td><td>0</td><td>0</td><td>-1</td><td>1</td><td>1</td><td>20</td><td></td>
+                </tr>
+                <tr>
+                    <td>0</td><td>1</td><td>0</td><td>1</td><td>-1</td><td>0</td><td>20</td><td></td>
+                </tr>
+                <tr>
+                    <td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>180</td><td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    </div>
+    <div id="applet_container1"></div>
+
+    <script type="text/javascript">
+        var gg;
+        window.onload = function() {
+            gg = new GGBApplet({material_id: "MlnUmcgj", showMenuBar:true}, true);
+            gg.inject('applet_container1', 'preferHTML5');
+            step0();
+        }
+
+        function step0() {
+            var applet = document.ggbApplet;
+
+            applet.evalCommand("S1:2x+y=100");
+            applet.evalCommand('SetColor[S1,1,0,0]');
+            applet.evalCommand("S2:1x+1y=80");
+            applet.evalCommand('SetColor[S2,0,1,0]');
+            applet.evalCommand("S3:1x=40");
+            applet.evalCommand('SetColor[S3,0,0,1]');
+
+            applet.evalCommand('ZoomIn[-200,-100,200,300]');
+            applet.evalCommand("Z:-3x-2y=0");
+            applet.evalCommand('SetColor[Z,1,0,1]');
+
+        }
+        function step1() {
+            var applet = document.ggbApplet;
+
+            applet.evalCommand("S1:2x+y=100");
+            applet.evalCommand('SetColor[S1,1,0,0]');
+            applet.evalCommand("S2:1x+1y=80");
+            applet.evalCommand('SetColor[S2,0,1,0]');
+            applet.evalCommand("S3:1x=40");
+            applet.evalCommand('SetColor[S3,0,0,1]');
+
+            applet.evalCommand('ZoomIn[-200,-100,200,300]');
+            applet.evalCommand("Z:-3x-2y=120");
+            applet.evalCommand('SetColor[Z,1,0,1]');
+
+        }
+        function step2() {
+            var applet = document.ggbApplet;
+            applet.evalCommand("S1:2x+y=100");
+            applet.evalCommand('SetColor[S1,1,0,0]');
+            applet.evalCommand("S2:1x+1y=80");
+            applet.evalCommand('SetColor[S2,0,1,0]');
+            applet.evalCommand("S3:1x=40");
+            applet.evalCommand('SetColor[S3,0,0,1]');
+
+            applet.evalCommand('ZoomIn[-200,-100,200,300]');
+            applet.evalCommand("Z:-3x-2y=160");
+            applet.evalCommand('SetColor[Z,1,0,1]');
+
+        }
+        function step3() {
+            var applet = document.ggbApplet;
+
+            applet.evalCommand("S1:2x+y=100");
+            applet.evalCommand('SetColor[S1,1,0,0]');
+            applet.evalCommand("S2:1x+1y=80");
+            applet.evalCommand('SetColor[S2,0,1,0]');
+            applet.evalCommand("S3:1x=40");
+            applet.evalCommand('SetColor[S3,0,0,1]');
+
+            applet.evalCommand('ZoomIn[-200,-100,200,300]');
+            applet.evalCommand("Z:-3x-2y=180");
+            applet.evalCommand('SetColor[Z,1,0,1]');
+
+
+        }
+
+
+
+    </script>-->
+</div>
+</body>
+</html>
