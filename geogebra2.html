@@ -53,6 +53,7 @@
         try{
             var res=parseSolve($('#data').val(),step);
             var a=res.A;
+            console.log(res.z);
 
             var table = $('<table></table>').addClass('table').addClass('table-bordered');
             var headerRow = $('<tr><th>BV</th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>s3</th><th>P</th></tr>');
