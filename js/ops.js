@@ -115,24 +115,21 @@ var Result ={
     b:undefined,
     pivotCol:undefined,
     pivotRow:undefined,
-    bv:undefined,
-    z:undefined
+    bv:undefined
 }
 
 function  lpsolve(n, c, k, A, b, steps) {
-
-
     var min;
     var solution=new Array(); //n+1; //double * solution = new double [n + 1];
     var bv=new Array(); //k //int * rowVariableTracker = new int [k];
     for(i=n;i<n+k;i++)
         c[i]=0;
+    b[k]=0;
 
     for(var i = 0; i < k; i++)
         bv[i] = n + i;
 
     var curStep=0;
-    var z=0;
     while(curStep<steps&&(min = findMin(c, n+k)) < 0) {
         curStep++;
 
@@ -179,7 +176,7 @@ function  lpsolve(n, c, k, A, b, steps) {
             b[j] = b[j] - (divisor * b[pivotRow]);
         }
 
-        z=z-(functionDivisor * b[pivotRow]);
+        b[k]=b[k]-(functionDivisor * b[pivotRow]);
         //b[0] = b[0] - (functionDivisor * b[pivotRow]);
         for(var p = 0; p < n+k; ++p) {
             c[p] = c[p] - (functionDivisor * A[pivotRow][p]);
@@ -200,7 +197,9 @@ function  lpsolve(n, c, k, A, b, steps) {
     r.pivotRow=pivotRow;
     r.step=step;
     r.bv=bv;
-    r.z=z;
+    printVector("C",c);
+    printMatrix("A",A);
+    printVector("B",b);
     return r;
 }
 

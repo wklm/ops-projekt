@@ -53,7 +53,6 @@
         try{
             var res=parseSolve($('#data').val(),step);
             var a=res.A;
-            console.log(res.z);
 
             var table = $('<table></table>').addClass('table').addClass('table-bordered');
             var headerRow = $('<tr><th>BV</th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>s3</th><th>P</th></tr>');
@@ -80,6 +79,21 @@
                 table.append(row);
                 $('#step').val("Step "+step.toString());
             }
+
+            //Z row
+            var row = $('<tr></tr>');
+            var b=$('<td></td>').text("Z");
+            row.append(b)
+            for(i=0;i<res.c.length;i++)
+            {
+                var t=$('<td></td>').text(res.c[i].toFixed(2));
+                row.append(t);
+            }
+            var cellb=$('<td></td>').text(res.b[res.b.length-1].toFixed(2));
+            row.append(cellb);
+            table.append(row);
+
+
             $('#mytable').html(table);
         }
         catch(e)
