@@ -18,3 +18,14 @@
 .menu-img {
     height: 20rem;
 }
+
+.orbit-slide-number {
+    display: none !important;
+}
+
+th {
+    width: 12%;
+}
+
+td {
+}

@@ -1,0 +1,365 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simplex Alghoritm - OPS Projekt</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+    <script src="js/vendor/modernizr.js"></script>
+</head>
+<body>
+
+
+<div class="row">
+    <div class="large-12 columns">
+        <ul class="example-orbit-content" data-orbit
+            data-options="
+                  animation:slide;
+                  pause_on_hover:true;
+                  timer: false;
+                  navigation_arrows:false;
+                  bullets:true;">
+            <li data-orbit-slide="headline-1">
+                <div>
+                    <h2 class="text-center">Schritt 1</h2>
+                    <table class="top"role="grid">
+                        <thead>
+                        <tr class="text-center" >
+                            <th class="text-center" scope="row"></th>
+                            <th class="text-center" scope="row">X</th>
+                            <th class="text-center" scope="row">Y</th>
+                            <th class="text-center" scope="row">U1</th>
+                            <th class="text-center" scope="row">U2</th>
+                            <th class="text-center" scope="row">U3</th>
+                            <th class="text-center" scope="row">U4</th>
+                            <th class="text-center" scope="row">Z</th>
+                            <th class="text-center" scope="row">P</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="text-center" scope="column">R1</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">450</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" scope="column">R2</td>
+                            <td class="text-center" scope="column">200</td>
+                            <td class="text-center" scope="column">100</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">60000</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" scope="column">R3</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">2</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">900</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" scope="column">R4</td>
+                            <td class="text-center" scope="column">35</td>
+                            <td class="text-center" scope="column">10</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">900</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" scope="column">R5</td>
+                            <td class="text-center" scope="column">-7000</td>
+                            <td class="text-center" scope="column">-5000</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        Kleinste Wert der Zielfunktion ist -7000..
+                        Auswahl der Pivotzeile: 9000/35 = 257.143 , ist das kleinste Element
+                        Die folgende Operationen werden durchgeführt.
+                        R4=R4/35, R1= R1 – R4 , R2=R2-200R4, R3= R3 –R4 , R5= R5+7000R4
+                    </p>
+                </div>
+            </li>
+            <li data-orbit-slide="headline-2">
+                <div>
+                    <h2 class="text-center">Schritt 2</h2>
+                    <table class="top"role="grid">
+                        <thead>
+                        <tr class="text-center" >
+                            <th class="text-center" scope="row"></th>
+                            <th class="text-center" scope="row">X</th>
+                            <th class="text-center" scope="row">Y</th>
+                            <th class="text-center" scope="row">U1</th>
+                            <th class="text-center" scope="row">U2</th>
+                            <th class="text-center" scope="row">U3</th>
+                            <th class="text-center" scope="row">U4</th>
+                            <th class="text-center" scope="row">Z</th>
+                            <th class="text-center" scope="row">P</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="text-center" scope="column">R1</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">450</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" scope="column">R2</td>
+                            <td class="text-center" scope="column">200</td>
+                            <td class="text-center" scope="column">100</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">60000</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" scope="column">R3</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">2</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">900</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" scope="column">R4</td>
+                            <td class="text-center" scope="column">35</td>
+                            <td class="text-center" scope="column">10</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">900</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" scope="column">R5</td>
+                            <td class="text-center" scope="column">-7000</td>
+                            <td class="text-center" scope="column">-5000</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        Kleinster Wert der Zielfunktion ist -3000
+                        Auswahl der Pivotzeile: 8571.45/42.8571 = 200, ist das kleinste Element
+                        Die folgende Operationen werden durchgeführt.
+                        R2=R2/42.8571, R1= R1 /0.71429R2 , R3= R3 –1.71429R2 , R4= R4+0.285714R2, R5= R5+3000R2
+                    </p>
+                </div>
+            </li>
+            <li data-orbit-slide="headline-3">
+                <div>
+                    <h2 class="text-center">Schritt 3</h2>
+                    <table class="top"role="grid">
+                        <thead>
+                        <tr class="text-center" >
+                            <th class="text-center" scope="row"></th>
+                            <th class="text-center" scope="row">X</th>
+                            <th class="text-center" scope="row">Y</th>
+                            <th class="text-center" scope="row">U1</th>
+                            <th class="text-center" scope="row">U2</th>
+                            <th class="text-center" scope="row">U3</th>
+                            <th class="text-center" scope="row">U4</th>
+                            <th class="text-center" scope="row">Z</th>
+                            <th class="text-center" scope="row">P</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="text-center" scope="column">R1</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">450</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" scope="column">R2</td>
+                            <td class="text-center" scope="column">200</td>
+                            <td class="text-center" scope="column">100</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">60000</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" scope="column">R3</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">2</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">900</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" scope="column">R4</td>
+                            <td class="text-center" scope="column">35</td>
+                            <td class="text-center" scope="column">10</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">900</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" scope="column">R5</td>
+                            <td class="text-center" scope="column">-7000</td>
+                            <td class="text-center" scope="column">-5000</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        Kleinster Wert der Zielfunktion ist -200
+                        Auswahl der Pivotzeile 0.0666667/50 = 750, ist das kleinste Element
+                        Die folgende Operationen werden durchgeführt.
+                        R1=R1/0.0666667, R2= R2-0.133333R1 , R3=R3-0,2R1 , R4=R4-0.0666667R1 , R5=R5-200R1
+                    </p>
+                </div>
+            </li>
+            <li data-orbit-slide="headline-4">
+                <div>
+                    <h2 class="text-center">Schritt 4</h2>
+                    <table class="top"role="grid">
+                        <thead>
+                        <tr class="text-center" >
+                            <th class="text-center" scope="row"></th>
+                            <th class="text-center" scope="row">X</th>
+                            <th class="text-center" scope="row">Y</th>
+                            <th class="text-center" scope="row">U1</th>
+                            <th class="text-center" scope="row">U2</th>
+                            <th class="text-center" scope="row">U3</th>
+                            <th class="text-center" scope="row">U4</th>
+                            <th class="text-center" scope="row">Z</th>
+                            <th class="text-center" scope="row">P</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="text-center" scope="column">R1</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">450</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" scope="column">R2</td>
+                            <td class="text-center" scope="column">200</td>
+                            <td class="text-center" scope="column">100</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">60000</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" scope="column">R3</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">2</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">900</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" scope="column">R4</td>
+                            <td class="text-center" scope="column">35</td>
+                            <td class="text-center" scope="column">10</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">900</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center" scope="column">R5</td>
+                            <td class="text-center" scope="column">-7000</td>
+                            <td class="text-center" scope="column">-5000</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">0</td>
+                            <td class="text-center" scope="column">1</td>
+                            <td class="text-center" scope="column">0</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        Da keine negative Wert in unserer Zielfunktion mehr gibt, haben wir das Maximum erreicht .
+                        X=150, Y=300, Maximum=2550000.
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+<script src="js/vendor/jquery.js"></script>
+<script src="js/foundation.min.js"></script>
+<script>
+    $(document).foundation();
+</script>
+</body>
+</html>
