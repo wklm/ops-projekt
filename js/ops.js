@@ -108,14 +108,14 @@ function printMatrix(name, m)
     }
 }
 
-var Result ={
-    step: undefined,
-    A: undefined,
-    c:undefined,
-    b:undefined,
-    pivotCol:undefined,
-    pivotRow:undefined,
-    bv:undefined
+function Result()  {
+    this.step=undefined;
+    this.A=undefined;
+    this.c=undefined;
+    this.b=undefined;
+    this.pivotCol=undefined;
+    this.pivotRow=undefined;
+    this.bv=undefined;
 }
 
 function  lpsolve(n, c, k, A, b, steps) {
@@ -189,7 +189,7 @@ function  lpsolve(n, c, k, A, b, steps) {
         printMatrix("A",A);
         printVector("B",b);
     }
-    r=Result;
+    r=new Result();
     r.A=A;
     r.c=c;
     r.b=b;

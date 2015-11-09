@@ -8,6 +8,7 @@
     <script type="text/javascript" src="./js/jquery-1.11.3.min.js"></script>
     <script src="./js/bootstrap.min.js"></script>
     <script src="js/ops.js"></script>
+    <script src="js/hsv.js"></script>
     <script type="text/javascript" src="http://www.geogebratube.org/scripts/deployggb.js"></script>
 
     <style>
@@ -55,6 +56,7 @@
         function solve()
         {
             try{
+
                 var res=parseSolve($('#data').val(),step);
                 var a=res.A;
 
@@ -114,11 +116,33 @@
                 $('#result').html("x="+ x.toFixed(2)+"<br/>y="+ y.toFixed(2)+"<br/>Z="+ z.toFixed(2));
                 var applet = document.ggbApplet;
                 applet.evalCommand("P=("+x+", "+y+")");
+                draw(step);
             }
             catch(e)
             {
                 console.log(e);
             }
+        }
+
+        function draw(step)
+        {
+
+            var res=parseSolve($('#data').val(),0);
+            var resStep=parseSolve($('#data').val(),step);
+            var a=res.A;
+
+            var applet = document.ggbApplet;
+
+            for(i=0;i< a.length;i++)
+            {
+                applet.evalCommand("S"+i+":"+a[i][0]+"x+"+a[i][1]+"y<"+res.b[i]);
+                c=uniqueColor(a.length,i);
+                cmd='SetColor[S'+i+','+c[0]+','+c[1]+','+c[2]+']'
+                applet.evalCommand(cmd);
+            }
+            applet.evalCommand("Z:"+res.c[0]+"x+"+res.c[1]+"y="+(-1)*resStep.b[resStep.b.length-1]);
+            //applet.evalCommand('ZoomIn[-200,-100,200,300]');
+
         }
 
         solve();
@@ -135,196 +159,25 @@
             solve();
         }
 
-
         var gg;
         window.onload = function() {
-            gg = new GGBApplet({material_id: "MlnUmcgj", showMenuBar:true}, true);
+            gg = new GGBApplet({material_id: "MlnUmcgj", showAlgebraInput:true}, true);
             gg.inject('applet_container1', 'preferHTML5');
-            //step0();
         };
+        function  ggbOnInit()
+        {
+            solve();
+        }
+
+        //http://stackoverflow.com/a/6823364
+        function uniqueColor(total, nr)
+        {
+            var i = 360 / (total - 1); // distribute the colors evenly on the hue range
+            return hsvToRgb(i * nr, 100, 100); // you can also alternate the saturation and value for even more contrast between the colors
+            return r;
+        }
 
     </script>
-
-
-
-
-
-
-    <!--    <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#home" onclick="step0();">Home</a></li>
-            <li><a data-toggle="tab" href="#step1" onclick="step1();">Step 1</a></li>
-            <li><a data-toggle="tab" href="#step2" onclick="step2();">Step 2</a></li>
-            <li><a data-toggle="tab" href="#step3" onclick="step3();">Step 3</a></li>
-        </ul>
-
-        <div class="tab-content">
-            <div id="home" class="tab-pane fade in active">
-                <h1>Step 1</h1>
-                Wir wählen als  Pivotspalte immer die Spalte mit dem kleinsten Eintrag in der Zielfunktionszeile.<br/>
-                Die Zeile mit dem kleinsten nichtnegativen Quotienten wählen wir als  Pivotzeile.<br/>
-                <table class="table table-bordered">
-                    <tr>
-                        <th>Z</th><th>x1</th><th>x2</th><th>s1</th><th>s1</th><th>s3</th><th>P</th><th>Q</th>
-                    </tr>
-                    <tr>
-                        <td>0</td><td>2</td><td>1</td><td>1</td><td>0</td><td>0</td><td>100</td><td></td>
-                    </tr>
-                    <tr>
-                        <td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>80</td><td></td>
-                    </tr>
-                    <tr>
-                        <td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>40</td><td></td>
-                    </tr>
-                    <tr>
-                        <td>1</td><td>-3</td><td>-2</td><td>0</td><td>0</td><td>0</td><td>0</td><td></td>
-                    </tr>
-                </table>
-            </div>
-
-
-            <div id="step1" class="tab-pane fade">
-                <h1>Step 2</h1>
-                <br/>
-                <br/>
-                <table class="table table-bordered">
-                    <tr>
-                        <th>Z</th><th>x1</th><th>x2</th><th>s1</th><th>s1</th><th>s3</th><th>P</th><th>Q</th>
-                    </tr>
-                    <tr>
-                        <td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>-2</td><td>20</td><td></td>
-                    </tr>
-                    <tr>
-                        <td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>-1</td><td>40</td><td></td>
-                    </tr>
-                    <tr>
-                        <td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>40</td><td></td>
-                    </tr>
-                    <tr>
-                        <td>1</td><td>0</td><td>-2</td><td>0</td><td>0</td><td>3</td><td>120</td><td></td>
-                    </tr>
-                </table>
-            </div>
-
-            <div id="step2" class="tab-pane fade">
-                <h1>Step 3</h1>
-                <br/>
-                <br/>
-                <table class="table  table-bordered">
-                    <tr>
-                        <th>Z</th><th>x1</th><th>x2</th><th>s1</th><th>s1</th><th>s3</th><th>P</th><th>Q</th>
-                    </tr>
-                    <tr>
-                        <td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>-2</td><td>20</td><td></td>
-                    </tr>
-                    <tr>
-                        <td>0</td><td>0</td><td>0</td><td>-1</td><td>1</td><td>1</td><td>20</td><td></td>
-                    </tr>
-                    <tr>
-                        <td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>40</td><td></td>
-                    </tr>
-                    <tr>
-                        <td>1</td><td>0</td><td>0</td><td>2</td><td>0</td><td>-1</td><td>160</td><td></td>
-                    </tr>
-                </table>
-            </div>
-            <div id="step3" class="tab-pane fade">
-                <h1>Step 3</h1>
-                <br/>
-                <br/>
-                <table class="table  table-bordered">
-                    <tr>
-                        <th>Z</th><th>x1</th><th>x2</th><th>s1</th><th>s1</th><th>s3</th><th>P</th><th>Q</th>
-                    </tr>
-                    <tr>
-                        <td>0</td><td>0</td><td>1</td><td>-1</td><td>2</td><td>0</td><td>60</td><td></td>
-                    </tr>
-                    <tr>
-                        <td>0</td><td>0</td><td>0</td><td>-1</td><td>1</td><td>1</td><td>20</td><td></td>
-                    </tr>
-                    <tr>
-                        <td>0</td><td>1</td><td>0</td><td>1</td><td>-1</td><td>0</td><td>20</td><td></td>
-                    </tr>
-                    <tr>
-                        <td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>180</td><td></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        </div>
-        <div id="applet_container1"></div>
-
-        <script type="text/javascript">
-            var gg;
-            window.onload = function() {
-                gg = new GGBApplet({material_id: "MlnUmcgj", showMenuBar:true}, true);
-                gg.inject('applet_container1', 'preferHTML5');
-                step0();
-            }
-
-            function step0() {
-                var applet = document.ggbApplet;
-
-                applet.evalCommand("S1:2x+y=100");
-                applet.evalCommand('SetColor[S1,1,0,0]');
-                applet.evalCommand("S2:1x+1y=80");
-                applet.evalCommand('SetColor[S2,0,1,0]');
-                applet.evalCommand("S3:1x=40");
-                applet.evalCommand('SetColor[S3,0,0,1]');
-
-                applet.evalCommand('ZoomIn[-200,-100,200,300]');
-                applet.evalCommand("Z:-3x-2y=0");
-                applet.evalCommand('SetColor[Z,1,0,1]');
-
-            }
-            function step1() {
-                var applet = document.ggbApplet;
-
-                applet.evalCommand("S1:2x+y=100");
-                applet.evalCommand('SetColor[S1,1,0,0]');
-                applet.evalCommand("S2:1x+1y=80");
-                applet.evalCommand('SetColor[S2,0,1,0]');
-                applet.evalCommand("S3:1x=40");
-                applet.evalCommand('SetColor[S3,0,0,1]');
-
-                applet.evalCommand('ZoomIn[-200,-100,200,300]');
-                applet.evalCommand("Z:-3x-2y=120");
-                applet.evalCommand('SetColor[Z,1,0,1]');
-
-            }
-            function step2() {
-                var applet = document.ggbApplet;
-                applet.evalCommand("S1:2x+y=100");
-                applet.evalCommand('SetColor[S1,1,0,0]');
-                applet.evalCommand("S2:1x+1y=80");
-                applet.evalCommand('SetColor[S2,0,1,0]');
-                applet.evalCommand("S3:1x=40");
-                applet.evalCommand('SetColor[S3,0,0,1]');
-
-                applet.evalCommand('ZoomIn[-200,-100,200,300]');
-                applet.evalCommand("Z:-3x-2y=160");
-                applet.evalCommand('SetColor[Z,1,0,1]');
-
-            }
-            function step3() {
-                var applet = document.ggbApplet;
-
-                applet.evalCommand("S1:2x+y=100");
-                applet.evalCommand('SetColor[S1,1,0,0]');
-                applet.evalCommand("S2:1x+1y=80");
-                applet.evalCommand('SetColor[S2,0,1,0]');
-                applet.evalCommand("S3:1x=40");
-                applet.evalCommand('SetColor[S3,0,0,1]');
-
-                applet.evalCommand('ZoomIn[-200,-100,200,300]');
-                applet.evalCommand("Z:-3x-2y=180");
-                applet.evalCommand('SetColor[Z,1,0,1]');
-
-
-            }
-
-
-
-        </script>-->
 </div>
 </body>
 </html>
