@@ -26,6 +26,16 @@
 .term {
     width: 50%;
 }
+.orbit-bullets li {
+    height: 1.5rem;
+    width: 6rem;
+    background-color: #999999;
+    border-color: #007095;
+}
+.orbit-bullets li.active {
+    background-color: #008CBA;
+
+}
 
 th {
     width: 12%;
