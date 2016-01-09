@@ -23,6 +23,10 @@
     display: none !important;
 }
 
+.term {
+    width: 50%;
+}
+
 th {
     width: 12%;
 }

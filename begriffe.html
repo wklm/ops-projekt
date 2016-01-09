@@ -1,32 +1,248 @@
 <!doctype html>
-<html class="no-js" lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Simplex Algorithm - OPS Projekt</title>
-    <link rel="stylesheet" href="css/foundation.css" />
-    <link rel="stylesheet" href="css/custom.css" />
+    <link rel="stylesheet" href="css/foundation.css"/>
+    <link rel="stylesheet" href="css/custom.css"/>
     <script src="js/vendor/modernizr.js"></script>
-  </head>
+</head>
 
-  <body>
-<section class="block-list">
-<header>Wichtige Begriffe</header>
-<ul>
- 
-<li class="with-chevron"><a href="#">Linear</a></li>
-<li class="with-chevron"><a href="#">Lineares Optimierungsprogramm</a></li>
-<li class="with-chevron"><a href="#">Standardform</a></li>
-<li class="with-chevron"><a href="#">Transformation zur Standardform</a></li>
-<li class="with-chevron"><a href="#">Erweiterte Standardform</a></li>
-<li class="with-chevron"><a href="#">Zulässiger Bereich</a></li>
-<li class="with-chevron"><a href="#">Zielfunktion</a></li>
-<li class="with-chevron"><a href="#">Polytop</a></li>
-<li class="with-chevron"><a href="#">Beschränktes Optimierungsprogramm</a></li>
-<li class="with-chevron"><a href="#">Lösbares Optimierungsprogramm</a></li>
-<li class="with-chevron"><a href="#">Schattenpreise Optimierungsprogramm</a></li>
-</ul>
-</section>
+<body>
+<div class="row">
+    <div class="large-12 columns">
+        <div class="panel">
+            <section class="block-list">
+                <h1 class=" small-12 top title">Begriffe</h1>
+                <br>
+                <ul>
 
+                    <li>
+                        <a class="button term" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false"
+                           data-options="align:right">Linear</a>
+                        <div id="drop1" data-dropdown-content class="f-dropdown medium content" aria-hidden="true"
+                             tabindex="-1">
+                            <p>
+                                Eine Abbildung f: R^n ⟶ R^m heißt linear oder lineare Abbildung, falls gilt: <br>
+                                (i) f(x+y)=f(x)+f(y) für alle x,y∈R^n, <br>
+                                (ii) f(λx)= λf(x) für alle x∈R^n und λ∈R.
+                            </p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a class="button term" data-dropdown="drop2" aria-controls="drop2" aria-expanded="false"
+                           data-options="align:right">Lineares Optimierungsprogramm</a>
+                        <div id="drop2" data-dropdown-content class="f-dropdown medium content" aria-hidden="true"
+                             tabindex="-1">
+                            <p>
+                                Bei der Linearen Optimierung ist die Zielfunktion linear und die Nebenbedingungen sind
+                                durch lineare (Un)gleichungen gegeben.
+                                Ein Lineares Optimierungsprogramm setzt sich aus einer Zielfunktion, Gleichungen,
+                                Ungleichungen und Vorzeichenbeschränkungen zusammen.
+                            </p>
+                        </div>
+                    </li>
+
+
+                    <li>
+                        <a class="button term" data-dropdown="drop3" aria-controls="drop3" aria-expanded="false"
+                           data-options="align:right">Standardform</a>
+                        <div id="drop3" data-dropdown-content class="f-dropdown medium content" aria-hidden="true"
+                             tabindex="-1">
+                            <p>
+                                Als Standardform eines Lösungsproblems wird jene Form bezeichnet, bei der keine
+                                Nebenbedingung mit Gleichheitszeichen vorkommt und die Variablen alle das gleiche
+                                Vorzeichen haben. Sollte diese Form noch nicht vorliegen muss man das Lösungsproblem in
+                                die Standardform transponieren.
+                            </p>
+                        </div>
+                    </li>
+
+
+                    <li>
+                        <a class="button term" data-dropdown="drop4" aria-controls="drop4" aria-expanded="false"
+                           data-options="align:right">Transformation zur Standardform</a>
+                        <div id="drop4" data-dropdown-content class="f-dropdown medium content" aria-hidden="true"
+                             tabindex="-1">
+                            <p>
+                                Bei der Transformation eines Lösungsproblems in die Standardform ist auf folgende Punkte
+                                zu achten:
+                                Sollten Gleichheitsnebenbedingungen im Lösungsproblem enthalten sein, so müssen diese in
+                                Ungleichheitsnebenbedingungen umgewandelt werden.
+                                Gibt es im LP Variablen, die nicht Vorzeichenbeschränkt sind, so muss auch dies geändert
+                                werden.
+                                Einen vollen Zeilenrang herstellen. Das bedeutet, dass man Zeilen, die ein Vielfaches
+                                einer anderen Zeile sind streichen kann.
+                                Folgendes Beispiel wäre in Standardform:
+                                2x+7y→max
+                                x≤3
+                                2y≤4
+                                2x+3y≤8
+                                x,y≥0
+                                Die Nebenbedingungen sind alle Ungleichungen, die Variablen x und y sind auf den
+                                positiven Zahlenbereich beschränkt und die Zeilen sind linear unabhängig voneinander und
+                                bleiben deshalb alle erhalten.
+
+                            </p>
+                        </div>
+                    </li>
+
+
+                    <li>
+                        <a class="button term" data-dropdown="drop5" aria-controls="drop5" aria-expanded="false"
+                           data-options="align:right">Erweiterte Standardform</a>
+                        <div id="drop5" data-dropdown-content class="f-dropdown medium content" aria-hidden="true"
+                             tabindex="-1">
+                            <p>
+                                Die Erweiterte Standardform entsteht dann durch das Einführen von sogenannten
+                                Schlupfvariablen. Diese benötigt man, um Ungleichungen in Gleichungen umzuwandeln. Ein
+                                Beispiel:
+                                Die Ungleichung 2y≤4 kann man in die Gleichung 2y+v=4
+                                umwandeln. v ist hier die Schlupfvariable.
+                                Unser Beispiel von vorhin sieht dann so aus:
+                                2x+7y→max
+                                x+u=3
+                                2y+v=4
+                                2x+3y+w=8
+                                x,y≥0
+                                oder in Matrixform:
+                                ■(&x&y&u&v&w&@Z&2&7&0&0&0&0@u&1&0&1&0&0&3@v&0&2&0&1&0&4@w&2&3&0&0&1&8)
+
+                            </p>
+                        </div>
+                    </li>
+
+
+                    <li>
+                        <a class="button term" data-dropdown="drop6" aria-controls="drop6" aria-expanded="false"
+                           data-options="align:right">Zulässiger Bereich</a>
+                        <div id="drop6" data-dropdown-content class="f-dropdown medium content" aria-hidden="true"
+                             tabindex="-1">
+                            <p>
+                                Der zulässige Bereich eines LP wird auch zulässige Menge genannt. Dieser Bereich ist
+                                eine Teilmenge des R^n und wird durch die Nebenbedingungen des LP und eventueller Angabe
+                                zur Vorzeichenbeschränkungen der Variablen definiert.
+                                Wenn wir die Nebenbedingungen unseres Beispiels grafisch darstellen, sieht das
+                                folgendermaßen aus:
+                            </p>
+                            <img src="/img/abb1.png" alt="">
+                            <p>
+                                Der schwarzumrandete Bereich ist hier unser zulässiger Bereich.
+                                Der zulässige Bereich kann konvex sein: „Ein Bereich S ⊆ R^n heißt konvex, falls für
+                                jede zwei Punkte X,Y ∈ S alle Punkte auf der geradlinigen Verbindung zwischen X und Y
+                                auch in S liegen.“
+                                „Falls der zulässige Bereich beschränkt (von allen Richtungen eingegrenzt) ist …, heißt
+                                er konvexer Polyeder, der durch die Ecken des zulässigen Bereichs aufgespannt wird.“
+
+                            </p>
+
+                        </div>
+                    </li>
+
+
+                    <li>
+                        <a class="button term" data-dropdown="drop7" aria-controls="drop7" aria-expanded="false"
+                           data-options="align:right">Zielfunktion</a>
+                        <div id="drop7" data-dropdown-content class="f-dropdown medium content" aria-hidden="true"
+                             tabindex="-1">
+                            <p>
+                                Die Zielfunktion entscheidet, welche Lösung der Optimierungsfunktion die optimale ist.
+                                „Bei der linearen Optimierung ist die Zielfunktion eine Linearkombination der Variablen
+                                und soll entweder minimiert oder maximiert werden.“
+                                Hier wieder unser Beispiel in dem die Zielfunktion 2x+7y→max eingezeichnet wurde. Dabei
+                                wird die ZF so lange parallel verschoben, bis die ZF den optimalen Punkt erreicht.
+                            </p>
+                            <img src="/img/abb2.png" alt="">
+                        </div>
+                    </li>
+
+
+                    <li>
+                        <a class="button term" data-dropdown="drop8" aria-controls="drop8" aria-expanded="false"
+                           data-options="align:right">Polytop</a>
+                        <div id="drop8" data-dropdown-content class="f-dropdown medium content" aria-hidden="true"
+                             tabindex="-1">
+                            <p>
+                                „Eine Menge P⊆R^n ist ein Polytop, wenn sie als konvexe Hülle endlich vieler Punkte
+                                dargestellt werden kann. Ein k-dimensionales Polytop wird auch k-Polytop genannt. Die
+                                konvexe Hülle k+1 affin unabhängiger Punkte ist ein k-simplex.“
+                                Man kann sich das ganze ungefähr so vorstellen:
+                                Ein 0-Polytop ist eine Ecke alleine. Ein 1-Polytop sind zwei 0-Polytope, also zwei
+                                Ecken, die miteinander verbunden sind. Ein 2-Polytop wird aus mehreren 1-Polytopen
+                                gebildet und so weiter. [6]
+                                Ein 2-Polytop ist ein Polygon [6].
+                                Ein 3-Polytop wird auch Polyeder genannt. [6]
+                                Ein lineares Programm im geometrischen Sinne, kann man sich so vorstellen: auf einem
+                                d-dimensionalen Polytop, dass durch n lineare Ungleichungen gegeben ist, wird die
+                                höchste Ecke gesucht. Beim Simplex zum Beispiel wird an irgendeiner Ecke angefangen und
+                                entlang der Kanten wandert man immer weiter nach oben [7].
+
+                            </p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a class="button term" data-dropdown="drop9" aria-controls="drop9" aria-expanded="false"
+                           data-options="align:right">Beschränktes Optimierungsprogramm</a>
+                        <div id="drop9" data-dropdown-content class="f-dropdown medium content" aria-hidden="true"
+                             tabindex="-1">
+                            <p>
+                                Ein beschränktes Optimierungsprogramm ist ein Optimierungsprogramm, bei dem der
+                                zulässige Bereich beschränkt, d.h. linear bzw. geradlinig, also durch die linearen
+                                Nebenbedingungen abgegrenzt ist. An Abbildung1 sieht man sehr gut, dass unser Beispiel
+                                ein beschränktes Optmierungsprogramm ist, weil der zulässige Bereich gut durch die
+                                schwarzen Linien abgegrenzt wird.
+                                Im Vergleich dazu gibt es natürlich auch unbeschränkte Modelle, bei denen die
+                                Zielfunktion unendlich weit verschoben werden kann. Dadurch wird die Lösung immer weiter
+                                optimiert. Der optimale Zielfunktionswert liegt dann bei einem Maximierungsproblem bei
+                                +∞, bei einem Minimierungsproblem bei -∞.
+                            </p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a class="button term" data-dropdown="drop10" aria-controls="drop10" aria-expanded="false"
+                           data-options="align:right">Lösbares Optimierungsprogramm</a>
+                        <div id="drop10" data-dropdown-content class="f-dropdown medium content" aria-hidden="true"
+                             tabindex="-1">
+                            <p>
+                                Wie bereits oben erwähnt wird der zulässige Bereich durch die Nebenbedingungen
+                                festgelegt. Sollte die Schnittmenge der Bereich die durch die Nebenbedingungen
+                                festgelegt werden aber leer sein, ist der zulässige Bereich leer und das Problem hat
+                                keine Lösung.
+                            </p>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a class="button term" data-dropdown="drop11" aria-controls="drop11" aria-expanded="false"
+                           data-options="align:right">Schattenpreise</a>
+                        <div id="drop11" data-dropdown-content class="f-dropdown medium content" aria-hidden="true"
+                             tabindex="-1">
+                            <p>
+                                „‘Um wieviel niedriger ist mein Gewinn, wenn eine meiner Nebenbedingungen um einer
+                                Einheit strenger wird?‘ bzw. ‚Um wieviel höher ist mein Gewinn, wenn einer meiner
+                                Nebenbedingungen um eine Einheit lockerer wird?‘“.
+                                Durch die Berechnung der Schattenpreise sieht man schnell, ob es sich nicht doch lohnen
+                                könnte, die Nebenbedingungen zu verändern.
+
+                            </p>
+                        </div>
+                    </li>
+
+                </ul>
+            </section>
+        </div>
+        <a href="/" class="button" data-back="">« zurück</a>
+    </div>
+</div>
+
+<script src="js/vendor/jquery.js"></script>
+<script src="js/foundation.min.js"></script>
+<script>
+    $(document).foundation();
+</script>
 </body>
 </html>
