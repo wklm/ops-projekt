@@ -1,9 +1,9 @@
-// Implementieren Sie den Simplex Algorithmus. Schreiben Sie dafur eine Funkti- �
+// Implementieren Sie den Simplex Algorithmus. Schreiben Sie dafur eine Funkti-
 //on mit der Signatur
 //double* lpsolve(int n, double *c, int k, double **A, double *b).
 //39
 //n gibt die Anzahl der Variablen an, k die Anzahl der Nebenbedingung. Die
-//Vektoren c, b und die Matrix A sind entsprechend der Vorlesung zu ubergeben, �
+//Vektoren c, b und die Matrix A sind entsprechend der Vorlesung zu ubergeben,
 //sodass das Lineare Programm in Standardform
 //c
 //T
@@ -11,15 +11,15 @@
 //    Ax ? b
 //x ? 0
 //ist.
-//    Ruckgabe wird ein Array mit den entsprechenden L � osungswerten sein
-//� in der ersten Zeile stehen zwei mit Abstand getrennte Zahlen n, k, die wie
+//    Ruckgabe wird ein Array mit den entsprechenden Loesungswerten sein
+// in der ersten Zeile stehen zwei mit Abstand getrennte Zahlen n, k, die wie
 //oben zu verstehen sind.
-//� in der zweiten Zeile stehen n Flie�kommazahlen, die mit Absanden ge- �
-//trennt sind, und den Vektor c reprasentieren. �
-//� nun folgen k Zeilen mit jeweils n + 1 Zahlen. Die ersten n Zahlen bilden
-//eine Zeile der Matrix A, die letzte steht fur den zugeh � origen Eintrag im �
+// in der zweiten Zeile stehen n Fliesskommazahlen, die
+// mit Absanden getrennt sind, und den Vektor c reprasentieren.
+//nun folgen k Zeilen mit jeweils n + 1 Zahlen. Die ersten n Zahlen bilden
+//eine Zeile der Matrix A, die letzte steht fur den zugehoerigen Eintrag im
 //Vektor b (Jede Zeile entspricht daher einer Nebenbedingung.)
-//� Beachten Sie zum Einlesen eines ahnlichen Files auch das Beispielprogramm �
+//Beachten Sie zum Einlesen eines ahnlichen Files auch das Beispielprogramm
 //im Anhang.
 
 if (typeof console === "undefined"){
@@ -118,7 +118,55 @@ function Result()  {
     this.bv=undefined;
 }
 
+
+//passing arrays and variables by reference, so they can be changed if needed
+function dualSimplex(n, c, k, A, b) {
+    //check if all bi in array b are negative (dual simplex required if so)
+    var negCounter = 0;
+    for(var i = 0; i < k; ++i) {
+        if(b[i] < 0) {
+            ++negCounter;
+        }
+    }
+    if(negCounter == k) {
+        //swap the values of n and k (n is actually n + k)
+        var tempK = k;
+        k = n - k;
+        n = tempK + k;
+        //keep old b values in a temp array
+        var tempB = b;
+        //update b (corresponds to the dual c matrix from the OPS script)
+        b = new double[k + 1]();
+        for(var i = 0; i < k; ++i) {
+            b[i] = c[i];
+        }
+        //update c (corresponds to the dual b matrix from the OPS script)
+        c = new double[n]();
+        for(var i = 0; i < tempK; ++i) {
+            c[i] = tempB[i];
+        }
+        //transpone matrix A
+        var tempA = A;
+        var A = create2DArray(k)
+        for(var i = 0; i < k; ++i) {
+            var j = 0;
+            while(j < n - k) {
+                A[i][j] = -tempA[j][i];
+                ++j;
+            }
+            A[i][j + i] = 1;
+        }
+        console.log("**DUAL SIMPLEX**");
+        //print(n, c, k, A, b);
+        return true;
+    }
+    return false;
+}
+
 function  lpsolve(n, c, k, A, b, steps) {
+    var dual = dualSimplex(n, c, k, A, b);
+    console.log(dual);
+
     var min;
     var solution=new Array(); //n+1; //double * solution = new double [n + 1];
     var bv=new Array(); //k //int * rowVariableTracker = new int [k];
@@ -143,7 +191,7 @@ function  lpsolve(n, c, k, A, b, steps) {
         var pivotRow;
         var pivot;
         for(var i = 0; i < k; ++i) {
-            if(A[i][pivotColumn] != 0) {
+            if(A[i][pivotColumn] != 0 && A[i][pivotColumn] > 0) {
                 if(!pivotRowSet) {
                     pivotRowDiv = b[i] / A[i][pivotColumn];
                     pivotRow = i;
