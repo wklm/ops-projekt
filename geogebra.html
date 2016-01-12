@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title></title>
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/bootstrap-theme.min.css">
-    <script type="text/javascript" src="./js/jquery-1.11.3.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
+    <title>Simplex Algorithm - OPS Projekt</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
     <script src="js/ops.js"></script>
     <script src="js/hsv.js"></script>
     <script type="text/javascript" src="http://www.geogebratube.org/scripts/deployggb.js"></script>
@@ -24,162 +23,216 @@
     </style>
 </head>
 <body>
+<div class="row">
+    <div class="large-12 columns">
+        <div class="panel">
+            <section class="block-list" id="blockList">
+                <h1 class=" small-12 top title">JS Solver</h1>
 
-<br/>
-<div class="col-md-6">
 
-    <div class="form-inline input">
+                    <div class="row">
+                            <div class="small-5 columns">
+                                <h4>A Matrix:</h4>
+                                <div id="mytable" style="width:100%;"></div>
 
-        <button type="button" name="prev" id="prev" value="prev" onclick="prev();" class="btn btn-default">
-            prev</button>
-        <input type="text" class="input-small form-control" id="step" size="5"/>
-        <button type="button" name="next" id="next" value="next" onclick="next();" class="btn btn-default">
-            next</button>
-        <div id="loading" style="color:red">Loading Geogebra...</div>
+                                </div>
+                                <div class="small-4 columns">
+
+
+                                    <h4>Program:</h4>
+                                    <textarea id="data" rows="8" cols="25" onchange="solve();" onkeyup="solve();">
+                                    </textarea>
+                                    <div class="row">
+                                        <div class="large-12 columns">
+                                            <div class="row collapse">
+                                                <div class="small-3 columns">
+                                                    <a href="#" class="button postfix" onclick="prev();">&laquo; Prev </a>
+                                                </div>
+                                                <div class="small-6 columns">
+                                                    <input type="text" placeholder="Hex Value" id="step">
+                                                </div>
+                                                <div class="small-3 columns">
+                                                    <a href="#" class="button postfix" onclick="next();">Next &raquo;</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="small-3 columns">
+                                <h4>Values:</h4>
+                                <!--<div id="result"></div>-->
+                        <div class="row collapse prefix-radius">
+                            <div class="small-3 columns">
+                                <span class="prefix">X</span>
+                            </div>
+                            <div class="small-9 columns">
+                                <input type="text" placeholder="Value" id="valX"  readonly>
+                            </div>
+                        </div>
+                        <div class="row collapse prefix-radius">
+                            <div class="small-3 columns">
+                                <span class="prefix">Y</span>
+                            </div>
+                            <div class="small-9 columns">
+                                <input type="text" placeholder="Value" id="valY" readonly>
+                            </div>
+                        </div>
+                        <div class="row collapse prefix-radius">
+                            <div class="small-3 columns">
+                                <span class="prefix">Z</span>
+                            </div>
+                            <div class="small-9 columns">
+                                <input type="text" placeholder="Value" id="valZ" readonly>
+                            </div>
+                        </div>
+
+                                </div>
+                    </div>
+            <div id="applet_container1" style="width: 100%;"></div>
+                <a href="/" class="button" data-back="">&laquo; zurück</a>
+
+            </section>
+            </div>
+        </div>
     </div>
-    <br/>
 
-    <table id="mytable"></table>
-    <div id="result"></div>
+<script language="JavaScript">
 
-    Programm:<br/>
-        <textarea id="data" rows="6" cols="25" onchange="solve();" onkeyup="solve();">
-        </textarea>
+    $('#data').val(data2);
+    var step=0;
 
-    <div id="applet_container1"></div>
+    function solve()
+    {
+        try{
 
-
-    <script language="JavaScript">
-
-        $('#data').val(data2);
-        var step=0;
-
-        function solve()
-        {
-            try{
-
-                var res=parseSolve($('#data').val(),step);
-                var a=res.A;
-
-                var table = $('<table></table>').addClass('table').addClass('table-bordered');
-                var headerRow = $('<tr><th>BV</th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>s3</th><th>P</th></tr>');
-                table.append(headerRow);
-                for(i=0; i< a.length; i++){
-                    var row = $('<tr></tr>');
-
-                    var b=$('<td></td>').text(headerRow[0].cells[res.bv[i]+1].innerHTML);
-                    row.append(b)
-                    for(j=0;j<a[i].length;j++)
-                    {
-                        var t=$('<td></td>').text(a[i][j].toFixed(2));
-                        if(j==res.pivotCol&&i==res.pivotRow)
-                            t.addClass("pivotElem");
-                        else if(j==res.pivotCol)
-                            t.addClass("pivotCol");
-                        else if(i==res.pivotRow)
-                            t.addClass("pivotRow");
-                        row.append(t);
-                    }
-
-                    var cellb=$('<td></td>').text(res.b[i].toFixed(2));
-                    row.append(cellb);
-                    table.append(row);
-                    $('#step').val("Step "+step.toString());
-                }
-
-                //Z row
-                var row = $('<tr></tr>');
-                var b=$('<td></td>').text("Z");
-                row.append(b)
-                for(i=0;i<res.c.length;i++)
-                {
-                    var t=$('<td></td>').text(res.c[i].toFixed(2));
-                    row.append(t);
-                }
-                var cellb=$('<td></td>').text(res.b[res.b.length-1].toFixed(2));
-                row.append(cellb);
-                table.append(row);
-                $('#mytable').html(table);
-                var x=0;
-                var y=0;
-                var z=0;
-                for(i=0;i<res.bv.length;i++)
-                {
-                    if(res.bv[i]==0)
-                        x=res.b[i];
-                    if(res.bv[i]==1)
-                        y=res.b[i];
-                }
-                console.log("x="+x);
-                console.log("y="+y);
-                z=res.b[res.b.length-1];
-                console.log("Z="+z);
-                $('#result').html("x="+ x.toFixed(2)+"<br/>y="+ y.toFixed(2)+"<br/>Z="+ z.toFixed(2));
-                var applet = document.ggbApplet;
-                applet.evalCommand("P=("+x+", "+y+")");
-                draw(step);
-            }
-            catch(e)
-            {
-                console.log(e);
-            }
-        }
-
-        function draw(step)
-        {
-
-            var res=parseSolve($('#data').val(),0);
-            var resStep=parseSolve($('#data').val(),step);
+            var res=parseSolve($('#data').val(),step);
             var a=res.A;
 
-            var applet = document.ggbApplet;
+            var table = $('<table></table>').addClass('table').addClass('table-bordered');
+            var headerRow = $('<tr><th>BV</th><th>x1</th><th>x2</th><th>s1</th><th>s2</th><th>s3</th><th>P</th></tr>');
+            table.append(headerRow);
+            for(i=0; i< a.length; i++){
+                var row = $('<tr></tr>');
 
-            for(i=0;i< a.length;i++)
-            {
-                applet.evalCommand("S"+i+":"+a[i][0]+"x+"+a[i][1]+"y<"+res.b[i]);
-                c=uniqueColor(a.length,i);
-                cmd='SetColor[S'+i+','+c[0]+','+c[1]+','+c[2]+']'
-                applet.evalCommand(cmd);
+                var b=$('<td style="font-weight: bold;"></td>').text(headerRow[0].cells[res.bv[i]+1].innerHTML);
+                row.append(b)
+                for(j=0;j<a[i].length;j++)
+                {
+                    var t=$('<td></td>').text(a[i][j].toFixed(2));
+                    if(j==res.pivotCol&&i==res.pivotRow)
+                        t.addClass("pivotElem");
+                    else if(j==res.pivotCol)
+                        t.addClass("pivotCol");
+                    else if(i==res.pivotRow)
+                        t.addClass("pivotRow");
+                    row.append(t);
+                }
+
+                var cellb=$('<td></td>').text(res.b[i].toFixed(2));
+                row.append(cellb);
+                table.append(row);
+                $('#step').val("Step "+step.toString());
             }
-            applet.evalCommand("Z:"+res.c[0]+"x+"+res.c[1]+"y="+(-1)*resStep.b[resStep.b.length-1]);
-            //applet.evalCommand('ZoomIn[-200,-100,200,300]');
 
+            //Z row
+            var row = $('<tr></tr>');
+            var b=$('<td></td>').text("Z");
+            row.append(b)
+            for(i=0;i<res.c.length;i++)
+            {
+                var t=$('<td></td>').text(res.c[i].toFixed(2));
+                row.append(t);
+            }
+            var cellb=$('<td></td>').text(res.b[res.b.length-1].toFixed(2));
+            row.append(cellb);
+            table.append(row);
+            $('#mytable').html(table);
+            var x=0;
+            var y=0;
+            var z=0;
+            for(i=0;i<res.bv.length;i++)
+            {
+                if(res.bv[i]==0)
+                    x=res.b[i];
+                if(res.bv[i]==1)
+                    y=res.b[i];
+            }
+            console.log("x="+x);
+            console.log("y="+y);
+            z=res.b[res.b.length-1];
+            console.log("Z="+z);
+
+            $('#valX').val(x.toFixed(2));
+            $('#valY').val(y.toFixed(2));
+            $('#valZ').val(z.toFixed(2));
+            var applet = document.ggbApplet;
+            applet.evalCommand("P=("+x+", "+y+")");
+            draw(step);
         }
+        catch(e)
+        {
+            console.log(e);
+        }
+    }
 
+    function draw(step)
+    {
+
+        var res=parseSolve($('#data').val(),0);
+        var resStep=parseSolve($('#data').val(),step);
+        var a=res.A;
+
+        var applet = document.ggbApplet;
+
+        for(i=0;i< a.length;i++)
+        {
+            applet.evalCommand("S"+i+":"+a[i][0]+"x+"+a[i][1]+"y<"+res.b[i]);
+            c=uniqueColor(a.length,i);
+            cmd='SetColor[S'+i+','+c[0]+','+c[1]+','+c[2]+']'
+            applet.evalCommand(cmd);
+        }
+        applet.evalCommand("Z:"+res.c[0]+"x+"+res.c[1]+"y="+(-1)*resStep.b[resStep.b.length-1]);
+        //applet.evalCommand('ZoomIn[-200,-100,200,300]');
+
+    }
+
+    solve();
+    function next()
+    {
+        step++;
         solve();
-        function next()
-        {
-            step++;
-            solve();
-        }
+    }
 
-        function prev()
-        {
-            if(step>0)
-                step--;
-            solve();
-        }
+    function prev()
+    {
+        if(step>0)
+            step--;
+        solve();
+    }
 
-        var gg;
-        window.onload = function() {
-            gg = new GGBApplet({material_id: "MlnUmcgj", showAlgebraInput:true}, true);
-            gg.inject('applet_container1', 'preferHTML5');
-        };
-        function  ggbOnInit()
-        {
-            solve();
-            $('#loading').hide();
-        }
+    var gg;
+    window.onload = function() {
+        var w=document.getElementById('blockList').offsetWidth;
+        var dpr = window.devicePixelRatio;
 
-        //http://stackoverflow.com/a/6823364
-        function uniqueColor(total, nr)
-        {
-            var i = 360 / (total - 1); // distribute the colors evenly on the hue range
-            return hsvToRgb(i * nr, 100, 100); // you can also alternate the saturation and value for even more contrast between the colors
-            return r;
-        }
+        console.log(w);
+        gg = new GGBApplet({material_id: "MlnUmcgj", showAlgebraInput:true, width: w, height:w}, true);
+        gg.inject('applet_container1', 'preferHTML5');
+    };
+    function  ggbOnInit()
+    {
+        solve();
+        $('#loading').hide();
+    }
 
-    </script>
-</div>
+    //http://stackoverflow.com/a/6823364
+    function uniqueColor(total, nr)
+    {
+        var i = 360 / (total - 1); // distribute the colors evenly on the hue range
+        return hsvToRgb(i * nr, 100, 100); // you can also alternate the saturation and value for even more contrast between the colors
+        return r;
+    }
+
+</script>
 </body>
 </html>
