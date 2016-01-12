@@ -29,17 +29,7 @@ if (typeof console === "undefined"){
     }
 }
 
-var data="2 3 \n"+
-    "300 500 \n"+
-    "1	2	170 \n"+
-    "1	1	150 \n"+
-    "0	2	180\n";
 
-var data2="2 3 \n"+
-    "3 5 \n"+
-    "1	0	4 \n"+
-    "0	2	12 \n"+
-    "3	2	18 \n";
 
 //function double * lpsolve(int n, double * c, int k, double ** A, double * b) {
 function parseSolve(data, steps)
