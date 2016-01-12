@@ -4,8 +4,14 @@
 }
 
 .equation {
-    font-size: 2rem;
+    font-size: 1rem;
 }
+
+
+.bottomless {
+    margin-bottom: 0;
+}
+
 .top {
     margin-left: auto!important;
     margin-right: auto!important;
@@ -14,6 +20,10 @@
     text-align: center;
 }
 
+.colored {
+    color: orangered;
+    font-size: 110%;
+}
 .button {
     color: white !important;
     text-align: center;
@@ -32,7 +42,7 @@
 }
 .orbit-bullets li {
     height: 1.5rem;
-    width: 6rem;
+    width: 10%;
     background-color: #999999;
     border-color: #007095;
 }
@@ -41,5 +51,5 @@
 }
 
 th {
-    width: 12%;
+    width: 14%;
 }
