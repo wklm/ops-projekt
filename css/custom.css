@@ -2,6 +2,10 @@
     font-family: monospace;
     font-size: 5rem;
 }
+
+.equation {
+    font-size: 2rem;
+}
 .top {
     margin-left: auto!important;
     margin-right: auto!important;
