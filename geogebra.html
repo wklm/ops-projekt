@@ -242,11 +242,11 @@
 
     var gg;
     window.onload = function() {
-        var w=document.getElementById('blockList').offsetWidth;
+        var w=document.getElementById('applet_container1').offsetWidth;
         var dpr = window.devicePixelRatio;
 
         console.log(w);
-        gg = new GGBApplet({material_id: "MlnUmcgj", showAlgebraInput:true, width: w, height:w}, true);
+        gg = new GGBApplet({material_id: "MlnUmcgj", showAlgebraInput:true, width: w, height: w*2/3}, true);
         gg.inject('applet_container1', 'preferHTML5');
     };
     function  ggbOnInit()
